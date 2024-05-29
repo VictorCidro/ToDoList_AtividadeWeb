@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        #taskInput {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        #addTaskBtn {
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+        #taskList {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task {
+            background-color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+        .date {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 5px;
+        }
+        #clearTasksBtn {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #clearTasksBtn:hover {
+            background-color: #c9302c;
+        }
+        #toggleThemeBtn {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #5bc0de;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #toggleThemeBtn:hover {
+            background-color: #31b0d5;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #fff;
+        }
+        body.dark-mode .task {
+            background-color: #333;
+            border-color: #444;
+        }
+        body.dark-mode .date {
+            color: #bbb;
+        }
+        body.dark-mode #clearTasksBtn {
+            background-color: #d9534f;
+        }
+        body.dark-mode #clearTasksBtn:hover {
+            background-color: #c9302c;
+        }
+        body.dark-mode #toggleThemeBtn {
+            background-color: #5bc0de;
+        }
+        body.dark-mode #toggleThemeBtn:hover {
+            background-color: #31b0d5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+    <input type="text" id="taskInput" placeholder="Digite uma nova tarefa">
+    <button id="addTaskBtn">Adicionar Tarefa</button>
+    <ul id="taskList"></ul>
+    <button id="clearTasksBtn">Apagar Todas as Tarefas</button>
+    <button id="toggleThemeBtn">Alternar Tema</button>
+
+    <script>
+        document.getElementById('addTaskBtn').addEventListener('click', addTask);
+        document.getElementById('clearTasksBtn').addEventListener('click', clearTasks);
+        document.getElementById('toggleThemeBtn').addEventListener('click', toggleTheme);
+
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+
+            if (taskText === '') {
+                alert('Por favor, digite uma tarefa.');
+                return;
+            }
+
+            const taskList = document.getElementById('taskList');
+            const listItem = document.createElement('li');
+            listItem.className = 'task';
+            
+            const now = new Date();
+            const dateString = now.toLocaleDateString('pt-BR') + ' <br> ' + now.toLocaleTimeString('pt-BR');
+            
+            listItem.innerHTML = `<span>${taskText.toUpperCase()}</span> <span class="date">${dateString}</span>`;
+            taskList.appendChild(listItem);
+
+            taskInput.value = '';
+        }
+
+        function clearTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
